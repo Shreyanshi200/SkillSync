@@ -31,7 +31,7 @@ public class ProjectService {
         return projects.stream().map(this::mapToDTO).collect(Collectors.toList());
 
     }
-    public void deleteproject(Long projectId){
+    public void deleteProject(Long projectId){
         projectRepository.deleteById(projectId);
     }
     public Project updateProject(Long pId,ProjectDTO dto){
