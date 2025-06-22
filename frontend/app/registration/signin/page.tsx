@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Using next/navigation for routing
+import { useRouter } from 'next/navigation';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -11,10 +11,28 @@ export default function SignIn() {
 
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
-    // Mock sign-in logic
-    if (email === 'user@example.com' && password === 'password') {
-      localStorage.setItem('authenticated', 'true'); // Store user as authenticated
-      router.push('/'); // Redirect to the home page after sign-in
+
+    // 🔐 Mock user data based on credentials
+    let mockUser = null;
+
+    if (email === 'admin@example.com' && password === 'adminpass') {
+      mockUser = {
+        user_id: 'admin123',
+        role_type: 'admin',
+      };
+    } else if (email === 'user@example.com' && password === 'password') {
+      mockUser = {
+        user_id: 'user456',
+        role_type: 'user',
+      };
+    }
+
+    // ✅ Set localStorage and redirect if valid
+    if (mockUser) {
+      localStorage.setItem('authenticated', 'true');
+      localStorage.setItem('user_id', mockUser.user_id);
+      localStorage.setItem('role_type', mockUser.role_type);
+      router.push('/');
     } else {
       setError('Invalid credentials');
     }
@@ -30,10 +48,10 @@ export default function SignIn() {
       <div className="relative z-10 w-full sm:w-96 p-12 bg-white bg-opacity-20 backdrop-blur-md rounded-xl shadow-xl">
         {/* Logo and Tagline */}
         <div className="text-center mb-12">
-          <div className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-pink-500 animate_animated animate_fadeInUp">
+          <div className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-pink-500">
             SkillSync
           </div>
-          <p className="text-2xl font-bold text-black text-shadow-lg animate_animated animatefadeInUp animate_delay-1s">
+          <p className="text-2xl font-bold text-black text-shadow-lg">
             Syncing developers with their dream projects, seamlessly.
           </p>
         </div>
@@ -79,7 +97,7 @@ export default function SignIn() {
         {/* Footer Text */}
         <p className="mt-6 text-center text-sm text-black-300">
           Don't have an account?{' '}
-          <a href="/registeration/signup" className="text-indigo-500 font-semibold hover:text-indigo-600">Sign Up</a>
+          <a href="/registration/signup" className="text-indigo-500 font-semibold hover:text-indigo-600">Sign Up</a>
         </p>
       </div>
 
@@ -87,6 +105,6 @@ export default function SignIn() {
       <div className="absolute bottom-5 right-5 p-4 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 cursor-pointer">
         <span className="text-xl">💡</span>
       </div>
-    </div>
-  );
+    </div>
+  );
 }
