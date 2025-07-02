@@ -1,6 +1,7 @@
 package com.skillsync.skillsync.controller;
 
 import com.skillsync.skillsync.dto.SkillDTO;
+import com.skillsync.skillsync.dto.SkillResponseDTO;
 import com.skillsync.skillsync.entity.Skill;
 import com.skillsync.skillsync.service.SkillService;
 import lombok.RequiredArgsConstructor;
@@ -12,22 +13,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/skills")
+@RequestMapping("/admin/skills")
 @RequiredArgsConstructor
 public class SkillController {
     private final SkillService skillService;
 
     @PostMapping
-    public ResponseEntity<Skill>addSkill(@RequestBody SkillDTO skillDTO){
-        return ResponseEntity.ok(skillService.addSkill(skillDTO));
+    public ResponseEntity<SkillResponseDTO> createSkill(@RequestBody SkillDTO dto) {
+        return ResponseEntity.ok(skillService.createSkill(dto));
     }
+
     @GetMapping
-    public ResponseEntity<List<Skill>>getMySkills(){
-        return ResponseEntity.ok(skillService.getMySkills());
+    public ResponseEntity<List<SkillResponseDTO>> getAllSkills() {
+        return ResponseEntity.ok(skillService.getAllSkills());
     }
-    @DeleteMapping("/{skillId}")
-    public ResponseEntity<Void>deleteSkill(@PathVariable Long skillId, @AuthenticationPrincipal UserDetails userDetails){
-        skillService.deleteSkill(skillId,userDetails.getUsername());
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSkill(@PathVariable Long id) {
+        skillService.deleteSkill(id);
         return ResponseEntity.noContent().build();
     }
 }

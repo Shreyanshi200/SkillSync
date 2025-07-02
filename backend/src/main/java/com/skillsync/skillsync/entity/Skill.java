@@ -16,9 +16,6 @@ public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
     private String name;
-    private String proficiencyLevel;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 }
