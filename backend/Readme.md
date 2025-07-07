@@ -42,3 +42,14 @@ spring.datasource.password=your_password
 
 # Run the app
 ./gradlew bootRun
+
+
+## ✨ Folder Structure
+skillsync-backend/
+├── controller/
+├── dto/
+├── entity/
+├── repository/
+├── security/
+├── service/
+└── SkillsyncApplication.java
